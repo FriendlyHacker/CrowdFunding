@@ -41,7 +41,7 @@ function CrowdFundingBuildRoute(&$query){
 	$mCatid	    = (empty($menuItem->query['catid']))  ? null : $menuItem->query['catid'];
 	$mId	    = (empty($menuItem->query['id']))     ? null : $menuItem->query['id'];
 	
-	// If is set view and Itemid missing, we have to put the view to the segments
+	// If is set view && Itemid missing, we have to put the view to the segments
 	if (isset($query['view'])) {
 		$view = $query['view'];
 		
@@ -56,7 +56,7 @@ function CrowdFundingBuildRoute(&$query){
 	};
 	
     // are we dealing with a category that is attached to a menu item?
-	if (isset($view) AND ($mView == $view) AND (isset($query['id'])) AND ($mId == intval($query['id']))) {
+	if (isset($view) && ($mView == $view) && (isset($query['id'])) && ($mId == intval($query['id']))) {
 		unset($query['view']);
 		unset($query['catid']);
 		unset($query['id']);
@@ -159,7 +159,7 @@ function CrowdFundingParseRoute($segments){
     $count      = count($segments);
     
     // Standard routing for articles.  If we don't pick up an Itemid then we get the view from the segments
-	// the first segment is the view and the last segment is the id of the details, category or payment.
+	// the first segment is the view && the last segment is the id of the details, category or payment.
     if(!isset($item)) {
         $vars['view']   = $segments[0];
         $vars['catid']  = $segments[$count - 1];
@@ -185,7 +185,7 @@ function CrowdFundingParseRoute($segments){
 	    // first we check if it is a category
 	    $category = JCategories::getInstance('CrowdFunding')->get($id);
 
-	    if ($category AND ( strcmp($category->alias, $alias) == 0) ) {
+	    if ($category && ( strcmp($category->alias, $alias) == 0) ) {
 	        $vars['view'] = 'discover';
 	        $vars['id']   = $id;
 	        return $vars;
@@ -280,7 +280,7 @@ function CrowdFundingParseRoute($segments){
             	$catId = (int)$segments[$count - 2];
             	$id    = (int)$segments[$count - 1];
             
-            	if ($id > 0 AND $catId > 0) {
+            	if ($id > 0 && $catId > 0) {
             		$vars['view']   = 'details';
             		$vars['catid']  = $catId;
             		$vars['id']     = $id;
